@@ -1,0 +1,10 @@
+[Unit]
+Description=Scream Audio Receiver
+
+[Service]
+EnvironmentFile=-/etc/scream.conf
+ExecStart=/usr/bin/env -- scream $SCREAM_ARGS
+
+[Install]
+WantedBy=multi-user.target
+Alias=screamd.service
