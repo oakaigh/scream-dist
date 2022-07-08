@@ -17,9 +17,20 @@ install/receiver/unix: build/receiver/unix
 		&& sudo $(MAKE) install
 
 configure/receiver/unix: install/receiver/unix
-	sudo cp --interactive scream.conf $(CONFIG_DIR)
-	sudo cp --force scream.service $(SYSTEMD_UNIT_DIR)
+	sudo adduser --system --no-create-home --disabled-login --group screamd
+	sudo cp --interactive --recursive scream.conf scream.d $(CONFIG_DIR)
+	sudo cp --force scream@.service $(SYSTEMD_UNIT_DIR)
+
+deploy/receiver/unix: configure/receiver/unix
+	-sudo systemctl stop --all 'scream@*'
+	sudo systemctl daemon-reload
 
 build: build/receiver/unix
 install: install/receiver/unix
 configure: configure/receiver/unix
+deploy: deploy/receiver/unix
+
+deploy-pulse: deploy
+	sudo usermod -a -G pulse-access screamd
+	sudo systemctl enable --now scream@default
+	sudo systemctl status 'scream@*'

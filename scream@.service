@@ -2,8 +2,10 @@
 Description=Scream Audio Receiver
 
 [Service]
+User=screamd
 EnvironmentFile=-/etc/scream.conf
-ExecStart=/usr/bin/env -- scream $SCREAM_ARGS
+EnvironmentFile=-/etc/scream.d/%I.conf
+ExecStart=/usr/bin/env -- scream $SCREAM_DEFAULT_ARGS $SCREAM_ARGS
 
 [Install]
 WantedBy=multi-user.target
