@@ -1,4 +1,6 @@
 [Unit]
+After=network-online.target sound.target
+Wants=network-online.target sound.target
 Description=Scream Audio Receiver
 
 [Service]
