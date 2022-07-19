@@ -8,6 +8,7 @@ User=screamd
 EnvironmentFile=-/etc/scream.conf
 EnvironmentFile=-/etc/scream.d/%I.conf
 ExecStart=/usr/bin/env -- scream $SCREAM_DEFAULT_ARGS $SCREAM_ARGS
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
